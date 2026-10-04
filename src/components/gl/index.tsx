@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 type Quality = {
   size: number;
   pointSize: number;
+  aperture: number;
   opacity: number;
   dpr: number;
   reducedMotion: boolean;
@@ -27,8 +28,8 @@ export const GL = ({ hovering }: { hovering: boolean }) => {
     const drift = !isMobile && !reducedMotion;
     setQuality(
       isMobile
-        ? { size: 192, pointSize: 17, opacity: 1.0, dpr: 1.5, reducedMotion, drift }
-        : { size: 320, pointSize: 13, opacity: 0.9, dpr: 1.75, reducedMotion, drift }
+        ? { size: 176, pointSize: 8.2, aperture: 0.82, opacity: 0.88, dpr: 1, reducedMotion, drift }
+        : { size: 284, pointSize: 8.6, aperture: 0.86, opacity: 0.92, dpr: 1.25, reducedMotion, drift }
     );
   }, []);
 
@@ -64,26 +65,28 @@ export const GL = ({ hovering }: { hovering: boolean }) => {
       >
         <color attach="background" args={["#000"]} />
         <CameraRig enabled={quality.drift} />
-        <Particles
-          speed={1.0}
-          aperture={1.79}
-          focus={3.8}
-          size={quality.size}
-          noiseScale={0.6}
-          noiseIntensity={0.52}
-          timeScale={1}
-          pointSize={quality.pointSize}
-          opacity={quality.opacity}
-          planeScale={10.0}
-          introspect={hovering}
-        />
+        <group position={[0, -0.4, 0]}>
+          <Particles
+            speed={1.0}
+            aperture={quality.aperture}
+            focus={4.0}
+            size={quality.size}
+            noiseScale={0.44}
+            noiseIntensity={0.74}
+            timeScale={1}
+            pointSize={quality.pointSize}
+            opacity={quality.opacity}
+            planeScale={11.4}
+            introspect={hovering}
+          />
+        </group>
       </Canvas>
       {/* CSS vignette — replaces the fullscreen postprocessing pass for free */}
       <div
         className="pointer-events-none absolute inset-0"
         style={{
           background:
-            "radial-gradient(120% 120% at 50% 50%, transparent 32%, rgba(0,0,0,0.45) 68%, rgba(0,0,0,0.9) 100%)",
+            "radial-gradient(90% 78% at 50% 52%, rgba(0,0,0,0.12) 0%, rgba(0,0,0,0.28) 44%, rgba(0,0,0,0.72) 78%, rgba(0,0,0,0.95) 100%), linear-gradient(to bottom, rgba(0,0,0,0.08), rgba(0,0,0,0.48) 72%, rgba(0,0,0,0.92))",
         }}
       />
     </div>

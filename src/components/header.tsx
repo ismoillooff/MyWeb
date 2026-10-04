@@ -1,5 +1,3 @@
-"use client";
-
 import { Logo } from "./logo";
 import { MobileMenu } from "./mobile-menu";
 import { LanguageSwitcher } from "./language-switcher";

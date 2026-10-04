@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>MyWeb</title>
+    <meta name="description" content="Modern Digital Agency" />
+    <link rel="preload" href="/fonts/playfair-display-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <script>
+      // Apply the saved (or OS) theme before first paint so there is no light/dark flash.
+      // Keep in sync with ThemeProvider in src/components/theme-provider.tsx.
+      (function () {
+        var root = document.documentElement;
+        try {
+          var theme = localStorage.getItem("theme") || "system";
+          if (theme === "system") {
+            theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+          }
+          root.classList.remove("light", "dark");
+          root.classList.add(theme);
+          if (theme === "light" || theme === "dark") root.style.colorScheme = theme;
+        } catch (e) {}
+      })();
+    </script>
+  </head>
+  <body class="min-h-screen bg-background text-foreground antialiased selection:bg-primary/30">
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

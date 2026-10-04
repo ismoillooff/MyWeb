@@ -1,5 +1,3 @@
-"use client";
-
 import { useState } from "react";
 import { useLanguage } from "@/lib/i18n";
 import { motion, AnimatePresence, useMotionTemplate, useMotionValue } from "framer-motion";

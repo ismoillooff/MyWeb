@@ -1,5 +1,3 @@
-"use client";
-
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { Zap, Code2, TrendingUp, Headphones, ArrowUpRight } from "lucide-react";
 import { useLanguage } from "@/lib/i18n";

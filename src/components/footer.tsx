@@ -1,5 +1,3 @@
-"use client";
-
 import { useLanguage } from "@/lib/i18n";
 import { motion } from "framer-motion";
 import { Facebook, Instagram, Linkedin, Github, Twitter, Mail, MapPin, Phone, ChevronRight } from "lucide-react";

@@ -9,16 +9,12 @@ pnpm-lock.yaml
 yarn.lock
 
 # ==============================
-# Next.js
-# ==============================
-.next/
-out/
-
-# ==============================
-# Production builds
+# Production builds (Vite)
 # ==============================
 build/
 dist/
+dist-ssr/
+*.local
 
 # ==============================
 # Environment variables
@@ -48,7 +44,6 @@ pnpm-debug.log*
 # TypeScript
 # ==============================
 *.tsbuildinfo
-next-env.d.ts
 
 # ==============================
 # Testing / Coverage

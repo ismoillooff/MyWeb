@@ -1,5 +1,3 @@
-"use client";
-
 import { Hero } from "@/components/hero";
 import { Header } from "@/components/header";
 import { Partners } from "@/components/partners";
@@ -16,7 +14,7 @@ import { Footer } from "@/components/footer";
 import { PlaceholderPage } from "@/components/placeholder-page";
 import { useState } from "react";
 
-export default function Page() {
+export default function App() {
   const [view, setView] = useState<"home" | "placeholder">("home");
   const [activeSection, setActiveSection] = useState("");
 

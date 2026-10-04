@@ -1,5 +1,3 @@
-"use client";
-
 import { ReactNode, useEffect } from "react";
 import { MotionConfig } from "framer-motion";
 import Lenis from "lenis";

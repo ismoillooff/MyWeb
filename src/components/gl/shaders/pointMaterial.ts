@@ -75,13 +75,22 @@ export class DofPointsMaterial extends THREE.ShaderMaterial {
           periodicNoise(noiseInput + vec3(50.0, 0.0, 0.0), continuousTime + 2.094),
           periodicNoise(noiseInput + vec3(0.0, 50.0, 0.0), continuousTime + 4.188)
         ) * uNoiseIntensity;
-        vec3 pos = originalPos + distortion;
+        float waveA = sin(originalPos.x * 1.28 + continuousTime * 0.32);
+        float waveB = cos(originalPos.z * 1.72 - continuousTime * 0.24);
+        float waveC = sin((originalPos.x + originalPos.z) * 0.72 + continuousTime * 0.18);
+        float waveD = cos((originalPos.x - originalPos.z) * 1.08 - continuousTime * 0.16);
+        float terrainWave = waveA * 0.46 + waveB * 0.34 + waveC * 0.28 + waveD * 0.18;
+
+        vec3 pos = originalPos;
+        pos.x += distortion.x * 0.22;
+        pos.z += distortion.z * 0.22;
+        pos.y += terrainWave * 0.88 + distortion.y * 0.28;
 
         vec4 mvPosition = modelViewMatrix * vec4(pos, 1.0);
         gl_Position = projectionMatrix * mvPosition;
 
         float dist = abs(uFocus - -mvPosition.z);
-        gl_PointSize = max(dist * uBlur * uPointSize, 3.0);
+        gl_PointSize = clamp(dist * uBlur * uPointSize, 2.2, 8.4);
 
         // Reveal mask + sparkle + DOF fade — constant across each point,
         // so computed per-vertex instead of per-fragment
@@ -89,8 +98,14 @@ export class DofPointsMaterial extends THREE.ShaderMaterial {
         float noiseValue = periodicNoise(originalPos * 4.0, 0.0);
         float revealThreshold = uRevealFactor + noiseValue * 0.3;
         float revealMask = 1.0 - smoothstep(revealThreshold - 0.2, revealThreshold + 0.1, distanceFromCenter);
-        float sparkleBrightness = sparkleNoise(originalPos, uTime);
-        float alpha = (1.04 - clamp(dist, 0.0, 1.0)) * clamp(smoothstep(-0.5, 0.25, pos.y), 0.0, 1.0) * uOpacity * revealMask * uRevealProgress * sparkleBrightness;
+        float sparkleBrightness = mix(0.84, sparkleNoise(originalPos, uTime), 0.28);
+        vec2 ndc = gl_Position.xy / gl_Position.w;
+        float heroTextClearance = smoothstep(0.16, 0.62, length(ndc / vec2(0.88, 0.58)));
+        float centerFade = mix(0.56, 1.0, heroTextClearance);
+        float depthFade = 1.0 - smoothstep(1.2, 4.8, dist);
+        float ridgeLight = smoothstep(-0.24, 0.72, terrainWave);
+        float screenFalloff = smoothstep(-1.05, -0.18, ndc.y) * (1.0 - smoothstep(1.05, 1.55, ndc.y));
+        float alpha = depthFade * screenFalloff * uOpacity * revealMask * uRevealProgress * sparkleBrightness * centerFade * mix(0.42, 1.0, ridgeLight);
         vAlpha = mix(alpha, sparkleBrightness - 1.1, uTransition);
       }`,
       fragmentShader: /* glsl */ `
@@ -98,8 +113,9 @@ export class DofPointsMaterial extends THREE.ShaderMaterial {
 
       void main() {
         vec2 cxy = 2.0 * gl_PointCoord - 1.0;
-        if (dot(cxy, cxy) > 0.25) discard;
-        gl_FragColor = vec4(vec3(1.0), vAlpha);
+        float circle = 1.0 - smoothstep(0.42, 0.58, dot(cxy, cxy));
+        if (circle < 0.01) discard;
+        gl_FragColor = vec4(vec3(1.0), vAlpha * circle);
       }`,
       uniforms: {
         positions: { value: createPositionsTexture(size, planeScale) },

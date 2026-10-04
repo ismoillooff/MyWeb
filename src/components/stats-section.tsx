@@ -1,5 +1,3 @@
-"use client";
-
 import { useRef, useEffect, useState } from "react";
 import { motion, useInView } from "framer-motion";
 import { useLanguage } from "@/lib/i18n";

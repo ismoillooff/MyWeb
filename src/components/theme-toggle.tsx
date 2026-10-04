@@ -1,4 +1,4 @@
-import { useTheme } from "next-themes";
+import { useTheme } from "./theme-provider";
 import { Sun, Moon } from "lucide-react";
 import { useEffect, useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";

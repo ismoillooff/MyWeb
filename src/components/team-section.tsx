@@ -1,5 +1,3 @@
-"use client";
-
 import { useLanguage } from "@/lib/i18n";
 import { ScrollFloat } from "./ui/scroll-float";
 import { AnimatedTitle } from "./ui/animated-title";

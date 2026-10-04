@@ -1,4 +1,4 @@
-import { useTheme } from "next-themes";
+import { useTheme } from "./theme-provider";
 import { useEffect, useState } from "react";
 
 export const Logo = ({ className, imgClassName }: { className?: string, imgClassName?: string }) => {

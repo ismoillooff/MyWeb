@@ -77,7 +77,7 @@ export function Particles({
     u.uTimeScale.value = timeScale * speed;
     u.uPointSize.value = pointSize;
     u.uOpacity.value = opacity;
-    u.uRevealFactor.value = easedProgress * 4.0;
+    u.uRevealFactor.value = easedProgress * 18.0;
     u.uRevealProgress.value = easedProgress;
 
     easing.damp(

@@ -1,5 +1,3 @@
-"use client";
-
 import { GL } from "./gl";
 import { Pill } from "./pill";
 import { Magnetic } from "./ui/magnetic";
@@ -7,9 +5,6 @@ import { useState, useEffect } from "react";
 import { useLanguage } from "@/lib/i18n";
 import { PhoneCall } from "lucide-react";
 import { motion, AnimatePresence, useScroll, useTransform, useMotionValue, useSpring, useReducedMotion, type Variants } from "framer-motion";
-import { Playfair_Display } from "next/font/google";
-
-const playfair = Playfair_Display({ subsets: ["latin"], weight: ["400", "500", "600", "700"] });
 
 export function Hero({ onStartProject }: { onStartProject?: () => void }) {
   const { t } = useLanguage();
@@ -146,7 +141,7 @@ export function Hero({ onStartProject }: { onStartProject?: () => void }) {
           style={{ rotateX: tiltXSpring, rotateY: tiltYSpring, transformPerspective: 900 }}
         >
           <motion.h1 
-            className={`text-[clamp(3.5rem,10vw,7rem)] sm:text-[clamp(4.5rem,12vw,9rem)] ${playfair.className} tracking-tight leading-[1] text-white drop-shadow-2xl flex flex-col items-center w-full m-0 p-0`}
+            className="text-[clamp(3.5rem,10vw,7rem)] sm:text-[clamp(4.5rem,12vw,9rem)] font-playfair tracking-tight leading-[1] text-white drop-shadow-2xl flex flex-col items-center w-full m-0 p-0"
             style={{ transformStyle: "preserve-3d" }}
           >
             <motion.span variants={textVariants} className="block pb-2 font-medium">
