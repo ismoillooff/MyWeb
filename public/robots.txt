@@ -1,0 +1,10 @@
+User-agent: GPTBot
+Allow: /
+
+User-agent: *
+Allow: /
+
+# AI Manifest Discovery
+Allow: /agency.json
+
+Sitemap: https://myweb.uz/sitemap.xml
